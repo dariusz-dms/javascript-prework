@@ -35,6 +35,7 @@ function displayResult(argComputerMove, argPlayerMove) {
 }
 
 function playGame(playerInput) {
+  console.log('Wywołano funkcję playGame. Gracz wybrał: ' + playerInput);
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
 
@@ -46,11 +47,14 @@ function playGame(playerInput) {
 }
 
 document.getElementById('play-rock').addEventListener('click', function () {
+  console.log('Kliknięto guzik Kamień'); 
   playGame(1);
 });
 document.getElementById('play-paper').addEventListener('click', function () {
+  console.log('Kliknięto guzik Papier'); 
   playGame(2);
 });
 document.getElementById('play-scissors').addEventListener('click', function () {
+  console.log('Kliknięto guzik Nożyce');
   playGame(3);
 });
