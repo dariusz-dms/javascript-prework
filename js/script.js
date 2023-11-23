@@ -2,6 +2,9 @@ function printMessage(msg) {
   let div = document.createElement('div');
   div.innerHTML = msg;
   document.getElementById('messages').appendChild(div);
+  document.getElementById('play-fanfare').addEventListener('click', function () {
+    playFanfare('https://pixabay.com/pl/sound-effects/success-fanfare-trumpets-6185/');
+  });
 }
 
 function getMoveName(argMoveId) {
