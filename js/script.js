@@ -3,6 +3,7 @@ function printMessage(msg) {
   div.innerHTML = msg;
   document.getElementById('messages').appendChild(div);
 }
+
 function getMoveName(argMoveId) {
   if (argMoveId === 1) {
     return 'kamień';
@@ -13,6 +14,14 @@ function getMoveName(argMoveId) {
   } else {
     return 'nieznany ruch';
   }
+}
+
+let consecutiveWins = 0;
+
+function playFanfare(soundUrl) {
+  const sound = new Audio(soundUrl);
+  sound.volume = 0.5;
+  sound.play();
 }
 
 function displayResult(argComputerMove, argPlayerMove) {
@@ -27,8 +36,15 @@ function displayResult(argComputerMove, argPlayerMove) {
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
+    consecutiveWins++;
     printMessage('Ty wygrywasz!');
+
+    if (consecutiveWins === 2) {
+      playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
+      consecutiveWins = 0; 
+    }
   } else {
+    consecutiveWins = 0; 
     printMessage('Komputer wygrywa!');
   }
 }
