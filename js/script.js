@@ -16,6 +16,14 @@ function getMoveName(argMoveId) {
   }
 }
 
+let playerWins = 0; // Licznik zwycięstw gracza
+
+function playFanfare(soundUrl) {
+  const sound = new Audio(soundUrl);
+  sound.volume = 0.5;
+  sound.play();
+}
+
 function displayResult(argComputerMove, argPlayerMove) {
   printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
 
@@ -28,8 +36,14 @@ function displayResult(argComputerMove, argPlayerMove) {
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
+    playerWins++;
     printMessage('Ty wygrywasz!');
+    if (playerWins === 3) {
+      playFanfare('https://pixabay.com/pl/sound-effects/success-fanfare-trumpets-6185/');
+      playerWins = 0; // Zresetowanie licznika zwycięstw gracza
+    }
   } else {
+    playerWins = 0; // Zresetowanie licznika zwycięstw gracza, jeśli przegra lub jest remis
     printMessage('Komputer wygrywa!');
   }
 }
