@@ -6,16 +6,20 @@ body {
     margin-bottom: 20px;
   }
   
-  button {
-    font-size: 16px;
-    padding: 10px 20px;
-    display: block;
-    margin: auto;
-    cursor: pointer;
-    border: none;
-    background-color: #280772;
-    color: white;
-  }
+  
+  .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+  .button {
+      padding: 8px 16px;
+      background-color: #eee;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   
   button:hover {
     background-color: #44109e;
