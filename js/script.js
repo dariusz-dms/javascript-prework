@@ -38,7 +38,7 @@ function displayResult(argComputerMove, argPlayerMove) {
   ) {
     playerWins++;
     printMessage('Ty wygrywasz!');
-    if (playerWins === 3) {
+    if (playerWins === 1) {
       playFanfare('https://pixabay.com/pl/sound-effects/success-fanfare-trumpets-6185/');
       playerWins = 0; // Zresetowanie licznika zwycięstw gracza
     }
