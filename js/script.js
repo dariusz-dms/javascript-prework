@@ -2,9 +2,6 @@ function printMessage(msg) {
   let div = document.createElement('div');
   div.innerHTML = msg;
   document.getElementById('messages').appendChild(div);
-  document.getElementById('play-fanfare').addEventListener('click', function () {
-    playFanfare('https://drive.google.com/file/d/1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW/view?usp=sharing');
-  });
 }
 function getMoveName(argMoveId) {
   if (argMoveId === 1) {
@@ -17,14 +14,10 @@ function getMoveName(argMoveId) {
     return 'nieznany ruch';
   }
 }
-let playerWins = 0;
-function playFanfare(soundUrl) {
-  const sound = new Audio(soundUrl);
-  sound.volume = 0.5;
-  sound.play();
-}
+
 function displayResult(argComputerMove, argPlayerMove) {
   printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
+
   if (argPlayerMove === 'nieznany ruch') {
     printMessage('Wprowadź poprawny ruch!');
   } else if (argComputerMove === argPlayerMove) {
@@ -34,14 +27,8 @@ function displayResult(argComputerMove, argPlayerMove) {
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
-    playerWins++;
     printMessage('Ty wygrywasz!');
-    if (playerWins === 2) {
-      playFanfare('https://drive.google.com/file/d/1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW/view?usp=sharing');
-      playerWins = 0; 
-    }
   } else {
-    playerWins = 0; 
     printMessage('Komputer wygrywa!');
   }
 }
