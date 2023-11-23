@@ -9,7 +9,8 @@ body {
   button {
     font-size: 16px;
     padding: 10px 20px;
-    margin: 5px;
+    display: block;
+    margin: auto;
     cursor: pointer;
     border: none;
     background-color: #4caf50;
@@ -17,5 +18,5 @@ body {
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: #44109e;
   }
