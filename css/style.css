@@ -1,12 +1,27 @@
-play:flex;justify-content:center;align-items:center;gap:10px}.button{padding:8px 16px;background-color:#eee;border:none;border-radibody{font-family:"Arial",sans-serif}#messages{margin-bottom:20px}.button-container{disus:4px;cursor:pointer}button:hover{background-color:#44109e}
-#game-results,
-#moves-history {
+play:flex;justify-content:center;
+align-items:center;gap:10px}
+.button{
+    padding:8px 16px;
+    background-color:#ac4141;
+    border:none;
+    border-radibody{
+        font-family:"Arial",sans-serif}#messages{
+            margin-bottom:20px
+        }
+    .button-container{
+        disus:4px;cursor:pointer
+    }
+    button:hover{
+        background-color:#44109e
+    }
+.game-results,
+.moves-history {
   display: flex;
   flex-wrap: wrap;
 }
 
-#game-results div,
-#moves-history div {
+.game-results div,
+.moves-history div {
   flex: 1;
   margin: 5px;
 }
