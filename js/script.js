@@ -1,19 +1,7 @@
-function printMessage(msg) {
+function printMessage(msg, containerId) {
   let div = document.createElement('div');
   div.innerHTML = msg;
-  document.getElementById('messages').appendChild(div);
-}
-
-function getMoveName(argMoveId) {
-  if (argMoveId === 1) {
-    return 'kamień';
-  } else if (argMoveId === 2) {
-    return 'papier';
-  } else if (argMoveId === 3) {
-    return 'nożyce';
-  } else {
-    return 'nieznany ruch';
-  }
+  document.getElementById(containerId).appendChild(div);
 }
 
 let consecutiveWins = 0;
@@ -26,11 +14,11 @@ function playFanfare(soundUrl) {
 }
 
 function displayResults() {
-  document.getElementById('messages').innerHTML = '';
+  document.getElementById('game-results').innerHTML = '';
 
-  let startIndex = Math.max(0, gameResults.length - 3); 
+  let startIndex = Math.max(0, gameResults.length - 3);
   for (let i = startIndex; i < gameResults.length; i++) {
-    printMessage(gameResults[i]);
+    printMessage(gameResults[i], 'game-results');
   }
 }
 
@@ -58,16 +46,15 @@ function displayResult(argComputerMove, argPlayerMove) {
     resultMessage = 'Komputer wygrywa!';
   }
 
-  gameResults.push(resultMessage); 
-  displayResults(); 
+  gameResults.push(resultMessage);
+  displayResults();
+}
 
 function playGame(playerInput) {
   console.log('Wywołano funkcję playGame. Gracz wybrał: ' + playerInput);
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
-
   let playerMove = getMoveName(parseInt(playerInput));
-
   displayResult(computerMove, playerMove);
 }
 
@@ -75,11 +62,25 @@ document.getElementById('play-rock').addEventListener('click', function () {
   console.log('Kliknięto guzik Kamień');
   playGame(1);
 });
+
 document.getElementById('play-paper').addEventListener('click', function () {
   console.log('Kliknięto guzik Papier');
   playGame(2);
 });
+
 document.getElementById('play-scissors').addEventListener('click', function () {
   console.log('Kliknięto guzik Nożyce');
   playGame(3);
 });
+
+function getMoveName(argMoveId) {
+  if (argMoveId === 1) {
+    return 'kamień';
+  } else if (argMoveId === 2) {
+    return 'papier';
+  } else if (argMoveId === 3) {
+    return 'nożyce';
+  } else {
+    return 'nieznany ruch';
+  }
+}
