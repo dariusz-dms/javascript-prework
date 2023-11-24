@@ -7,15 +7,13 @@ function printMessage(msg) {
 
 function updateGameHistory(msg) {
   let gameHistory = document.getElementById('game-results');
-  let historyItems = gameHistory.children;
-
-  if (historyItems.length >= 3) {
-    gameHistory.removeChild(historyItems[0]); // Remove oldest item
-  }
-
   let historyItem = document.createElement('div');
   historyItem.innerHTML = msg;
   gameHistory.appendChild(historyItem);
+
+  if (gameHistory.children.length > 3) {
+    gameHistory.removeChild(gameHistory.children[0]); // Usuń najstarszy wynik, jeśli jest więcej niż 3
+  }
 }
 
 function getMoveName(argMoveId) {
