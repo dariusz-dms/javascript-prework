@@ -6,14 +6,13 @@ body {
     margin-bottom: 20px;
   }
   
-  
-  .button-container {
+  #button-container {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
     }
-  .button {
+  #button {
       padding: 8px 16px;
       background-color: #eee;
       border: none;
@@ -24,3 +23,13 @@ body {
   button:hover {
     background-color: #44109e;
   }
+#game-results,
+#moves-history {
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+    flex: 1;
+    margin: 5px;
+  }
+}
