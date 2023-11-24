@@ -93,6 +93,9 @@ function playGame(playerInput) {
   printMessage('Twój ruch to: ' + playerMove, 'moves-history');
 
   displayResult(computerMove, playerMove);
+
+  printResults();
+  printMovesHistory();
 }
 
 document.getElementById('play-rock').addEventListener('click', function () {
