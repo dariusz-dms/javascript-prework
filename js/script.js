@@ -17,7 +17,7 @@ function getMoveName(argMoveId) {
 }
 
 let consecutiveWins = 0;
-let gameResults = []; // Przechowywanie wyników gry
+let gameResults = [];
 
 function playFanfare(soundUrl) {
   const sound = new Audio(soundUrl);
@@ -26,9 +26,9 @@ function playFanfare(soundUrl) {
 }
 
 function displayResults() {
-  document.getElementById('messages').innerHTML = ''; // Wyczyszczenie wyników przed wyświetleniem nowych
+  document.getElementById('messages').innerHTML = '';
 
-  let startIndex = Math.max(0, gameResults.length - 3); // Indeks początkowy
+  let startIndex = Math.max(0, gameResults.length - 3); 
   for (let i = startIndex; i < gameResults.length; i++) {
     printMessage(gameResults[i]);
   }
@@ -58,9 +58,8 @@ function displayResult(argComputerMove, argPlayerMove) {
     resultMessage = 'Komputer wygrywa!';
   }
 
-  gameResults.push(resultMessage); // Dodanie wyniku do tablicy wyników
-  displayResults(); // Wyświetlenie trzech ostatnich wyników
-}
+  gameResults.push(resultMessage); 
+  displayResults(); 
 
 function playGame(playerInput) {
   console.log('Wywołano funkcję playGame. Gracz wybrał: ' + playerInput);
