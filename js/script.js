@@ -24,6 +24,16 @@ function playFanfare(soundUrl) {
   sound.play();
 }
 
+function removePreviousResult() {
+  let gameResults = document.getElementById('game-results');
+  let results = gameResults.children;
+  
+  if (results.length >= 2) {
+    let previousResult = results[results.length - 2];
+    gameResults.removeChild(previousResult);
+  }
+}
+
 function displayResult(argComputerMove, argPlayerMove) {
   printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
 
@@ -41,10 +51,11 @@ function displayResult(argComputerMove, argPlayerMove) {
 
     if (consecutiveWins === 2) {
       playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
-      consecutiveWins = 0; 
+      consecutiveWins = 0;
+      removePreviousResult();
     }
   } else {
-    consecutiveWins = 0; 
+    consecutiveWins = 0;
     printMessage('Komputer wygrywa!');
   }
 }
