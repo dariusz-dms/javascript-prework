@@ -4,18 +4,6 @@ function printMessage(msg) {
   document.getElementById('messages').appendChild(div);
 }
 
-function getMoveName(argMoveId) {
-  if (argMoveId === 1) {
-    return 'kamień';
-  } else if (argMoveId === 2) {
-    return 'papier';
-  } else if (argMoveId === 3) {
-    return 'nożyce';
-  } else {
-    return 'nieznany ruch';
-  }
-}
-
 let consecutiveWins = 0;
 let gameResults = [];
 
@@ -23,6 +11,15 @@ function playFanfare(soundUrl) {
   const sound = new Audio(soundUrl);
   sound.volume = 0.5;
   sound.play();
+}
+
+function displayLastThreeResults() {
+  document.getElementById('game-results').innerHTML = '';
+
+  let startIndex = Math.max(0, gameResults.length - 3);
+  for (let i = startIndex; i < gameResults.length; i++) {
+    printMessage(gameResults[i], 'game-results');
+  }
 }
 
 function displayResult(argComputerMove, argPlayerMove) {
@@ -53,20 +50,15 @@ function displayResult(argComputerMove, argPlayerMove) {
   displayLastThreeResults();
 }
 
-function displayLastThreeResults() {
-  document.getElementById('game-results').innerHTML = '';
-  let startIndex = Math.max(0, gameResults.length - 3);
-  
-  for (let i = startIndex; i < gameResults.length; i++) {
-    printMessage(gameResults[i], 'game-results');
-  }
-}
-
 function playGame(playerInput) {
   console.log('Wywołano funkcję playGame. Gracz wybrał: ' + playerInput);
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
+
+  printMessage('Mój ruch to: ' + computerMove);
   let playerMove = getMoveName(parseInt(playerInput));
+  printMessage('Twój ruch to: ' + playerMove);
+
   displayResult(computerMove, playerMove);
 }
 
@@ -74,13 +66,23 @@ document.getElementById('play-rock').addEventListener('click', function () {
   console.log('Kliknięto guzik Kamień'); 
   playGame(1);
 });
-
 document.getElementById('play-paper').addEventListener('click', function () {
   console.log('Kliknięto guzik Papier'); 
   playGame(2);
 });
-
 document.getElementById('play-scissors').addEventListener('click', function () {
   console.log('Kliknięto guzik Nożyce');
   playGame(3);
 });
+
+function getMoveName(argMoveId) {
+  if (argMoveId === 1) {
+    return 'kamień';
+  } else if (argMoveId === 2) {
+    return 'papier';
+  } else if (argMoveId === 3) {
+    return 'nożyce';
+  } else {
+    return 'nieznany ruch';
+  }
+}
