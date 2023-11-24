@@ -4,6 +4,16 @@ function printMessage(msg) {
   document.getElementById('messages').appendChild(div);
 }
 
+function removePreviousResult() {
+  let gameResults = document.getElementById('game-results');
+  let results = gameResults.children;
+  
+  if (results.length >= 2) {
+    let previousResult = results[results.length - 2];
+    gameResults.removeChild(previousResult);
+  }
+}
+
 function getMoveName(argMoveId) {
   if (argMoveId === 1) {
     return 'kamień';
@@ -41,7 +51,7 @@ function displayResult(argComputerMove, argPlayerMove) {
 
     if (consecutiveWins === 2) {
       playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
-      consecutiveWins = 0; 
+      consecutiveWins = 0;
       removePreviousResult();
     }
   } else {
