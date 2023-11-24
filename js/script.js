@@ -37,28 +37,31 @@ function playFanfare(soundUrl) {
 }
 
 function displayResult(argComputerMove, argPlayerMove) {
-  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
+  let resultMessage = 'Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove;
 
   if (argPlayerMove === 'nieznany ruch') {
-    printMessage('Wprowadź poprawny ruch!');
+    resultMessage = 'Wprowadź poprawny ruch!';
   } else if (argComputerMove === argPlayerMove) {
-    printMessage('Remis!');
+    resultMessage = 'Remis!';
   } else if (
     (argComputerMove === 'kamień' && argPlayerMove === 'papier') ||
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
     consecutiveWins++;
-    printMessage('Ty wygrywasz!');
+    resultMessage = 'Ty wygrywasz!';
 
     if (consecutiveWins === 2) {
       playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
-      consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu
+      consecutiveWins = 0;
     }
   } else {
-    consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu, jeśli przegra lub jest remis
-    printMessage('Komputer wygrywa!');
+    consecutiveWins = 0;
+    resultMessage = 'Komputer wygrywa!';
   }
+
+  printMessage(resultMessage); // Aktualizacja wiadomości
+  updateGameHistory(resultMessage); // Dodanie wyniku do historii
 }
 
 function playGame(playerInput) {
