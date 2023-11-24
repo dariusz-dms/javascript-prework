@@ -4,16 +4,6 @@ function printMessage(msg) {
   document.getElementById('messages').appendChild(div);
 }
 
-function removePreviousResult() {
-  let gameResults = document.getElementById('game-results');
-  let results = gameResults.children;
-  
-  if (results.length >= 2) {
-    let previousResult = results[results.length - 2];
-    gameResults.removeChild(previousResult);
-  }
-}
-
 function getMoveName(argMoveId) {
   if (argMoveId === 1) {
     return 'kamień';
@@ -27,6 +17,7 @@ function getMoveName(argMoveId) {
 }
 
 let consecutiveWins = 0;
+let gameResults = []; // Przechowywanie wyników gry
 
 function playFanfare(soundUrl) {
   const sound = new Audio(soundUrl);
@@ -34,30 +25,41 @@ function playFanfare(soundUrl) {
   sound.play();
 }
 
+function displayResults() {
+  document.getElementById('messages').innerHTML = ''; // Wyczyszczenie wyników przed wyświetleniem nowych
+
+  let startIndex = Math.max(0, gameResults.length - 3); // Indeks początkowy
+  for (let i = startIndex; i < gameResults.length; i++) {
+    printMessage(gameResults[i]);
+  }
+}
+
 function displayResult(argComputerMove, argPlayerMove) {
-  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
+  let resultMessage = 'Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove;
 
   if (argPlayerMove === 'nieznany ruch') {
-    printMessage('Wprowadź poprawny ruch!');
+    resultMessage = 'Wprowadź poprawny ruch!';
   } else if (argComputerMove === argPlayerMove) {
-    printMessage('Remis!');
+    resultMessage = 'Remis!';
   } else if (
     (argComputerMove === 'kamień' && argPlayerMove === 'papier') ||
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
     consecutiveWins++;
-    printMessage('Ty wygrywasz!');
+    resultMessage = 'Ty wygrywasz!';
 
     if (consecutiveWins === 2) {
       playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
       consecutiveWins = 0;
-      removePreviousResult();
     }
   } else {
     consecutiveWins = 0;
-    printMessage('Komputer wygrywa!');
+    resultMessage = 'Komputer wygrywa!';
   }
+
+  gameResults.push(resultMessage); // Dodanie wyniku do tablicy wyników
+  displayResults(); // Wyświetlenie trzech ostatnich wyników
 }
 
 function playGame(playerInput) {
@@ -65,19 +67,17 @@ function playGame(playerInput) {
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
 
-  printMessage('Mój ruch to: ' + computerMove);
   let playerMove = getMoveName(parseInt(playerInput));
-  printMessage('Twój ruch to: ' + playerMove);
 
   displayResult(computerMove, playerMove);
 }
 
 document.getElementById('play-rock').addEventListener('click', function () {
-  console.log('Kliknięto guzik Kamień'); 
+  console.log('Kliknięto guzik Kamień');
   playGame(1);
 });
 document.getElementById('play-paper').addEventListener('click', function () {
-  console.log('Kliknięto guzik Papier'); 
+  console.log('Kliknięto guzik Papier');
   playGame(2);
 });
 document.getElementById('play-scissors').addEventListener('click', function () {
