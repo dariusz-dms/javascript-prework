@@ -51,16 +51,13 @@ function playFanfare(soundUrl) {
 }
 
 function displayResult(argComputerMove, argPlayerMove) {
-  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
-
   const moveMsg = 'Mój ruch to: ' + argComputerMove + ', Twój ruch to: ' + argPlayerMove;
   movesHistory.push(moveMsg);
   printMovesHistory();
 
   if (argPlayerMove === 'nieznany ruch') {
-    printMessage('Wprowadź poprawny ruch!');
+    gameResults.push('Wprowadź poprawny ruch!');
   } else if (argComputerMove === argPlayerMove) {
-    printMessage('Remis!');
     gameResults.push('Remis!');
   } else if (
     (argComputerMove === 'kamień' && argPlayerMove === 'papier') ||
@@ -68,8 +65,6 @@ function displayResult(argComputerMove, argPlayerMove) {
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
     consecutiveWins++;
-    printMessage('Ty wygrywasz!');
-
     gameResults.push('Ty wygrywasz!');
 
     if (consecutiveWins === 2) {
@@ -78,7 +73,6 @@ function displayResult(argComputerMove, argPlayerMove) {
     }
   } else {
     consecutiveWins = 0;
-    printMessage('Komputer wygrywa!');
     gameResults.push('Komputer wygrywa!');
   }
 
@@ -94,19 +88,19 @@ function playGame(playerInput) {
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
 
-  printMessage('Mój ruch to: ' + computerMove);
+  printMessage('Mój ruch to: ' + computerMove, 'moves-history');
   let playerMove = getMoveName(parseInt(playerInput));
-  printMessage('Twój ruch to: ' + playerMove);
+  printMessage('Twój ruch to: ' + playerMove, 'moves-history');
 
   displayResult(computerMove, playerMove);
 }
 
 document.getElementById('play-rock').addEventListener('click', function () {
-  console.log('Kliknięto guzik Kamień');
+  console.log('Kliknięto guzik Kamień'); 
   playGame(1);
 });
 document.getElementById('play-paper').addEventListener('click', function () {
-  console.log('Kliknięto guzik Papier');
+  console.log('Kliknięto guzik Papier'); 
   playGame(2);
 });
 document.getElementById('play-scissors').addEventListener('click', function () {
