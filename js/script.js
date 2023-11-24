@@ -4,8 +4,19 @@ function printMessage(msg) {
   document.getElementById('messages').appendChild(div);
 }
 
+function getMoveName(argMoveId) {
+  if (argMoveId === 1) {
+    return 'kamień';
+  } else if (argMoveId === 2) {
+    return 'papier';
+  } else if (argMoveId === 3) {
+    return 'nożyce';
+  } else {
+    return 'nieznany ruch';
+  }
+}
+
 let consecutiveWins = 0;
-let gameResults = [];
 
 function playFanfare(soundUrl) {
   const sound = new Audio(soundUrl);
@@ -13,41 +24,29 @@ function playFanfare(soundUrl) {
   sound.play();
 }
 
-function displayLastThreeResults() {
-  document.getElementById('game-results').innerHTML = '';
-
-  let startIndex = Math.max(0, gameResults.length - 3);
-  for (let i = startIndex; i < gameResults.length; i++) {
-    printMessage(gameResults[i], 'game-results');
-  }
-}
-
 function displayResult(argComputerMove, argPlayerMove) {
-  let resultMessage = 'Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove;
+  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
 
   if (argPlayerMove === 'nieznany ruch') {
-    resultMessage = 'Wprowadź poprawny ruch!';
+    printMessage('Wprowadź poprawny ruch!');
   } else if (argComputerMove === argPlayerMove) {
-    resultMessage = 'Remis!';
+    printMessage('Remis!');
   } else if (
     (argComputerMove === 'kamień' && argPlayerMove === 'papier') ||
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
     consecutiveWins++;
-    resultMessage = 'Ty wygrywasz!';
+    printMessage('Ty wygrywasz!');
 
     if (consecutiveWins === 2) {
       playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
-      consecutiveWins = 0; 
+      consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu
     }
   } else {
-    consecutiveWins = 0; 
-    resultMessage = 'Komputer wygrywa!';
+    consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu, jeśli przegra lub jest remis
+    printMessage('Komputer wygrywa!');
   }
-
-  gameResults.push(resultMessage);
-  displayLastThreeResults();
 }
 
 function playGame(playerInput) {
@@ -74,15 +73,3 @@ document.getElementById('play-scissors').addEventListener('click', function () {
   console.log('Kliknięto guzik Nożyce');
   playGame(3);
 });
-
-function getMoveName(argMoveId) {
-  if (argMoveId === 1) {
-    return 'kamień';
-  } else if (argMoveId === 2) {
-    return 'papier';
-  } else if (argMoveId === 3) {
-    return 'nożyce';
-  } else {
-    return 'nieznany ruch';
-  }
-}
