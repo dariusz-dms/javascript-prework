@@ -1,7 +1,21 @@
-function printMessage(msg) {
+const maxResults = 3;
+let gameResults = [];
+
+function printMessage(msg, containerId) {
   let div = document.createElement('div');
   div.innerHTML = msg;
-  document.getElementById('messages').appendChild(div);
+  document.getElementById(containerId).appendChild(div);
+}
+
+function printResults() {
+  const startIndex = Math.max(0, gameResults.length - maxResults);
+  const recentResults = gameResults.slice(startIndex);
+
+  document.getElementById('game-results').innerHTML = '';
+
+  for (const result of recentResults) {
+    printMessage(result, 'game-results');
+  }
 }
 
 function getMoveName(argMoveId) {
@@ -25,28 +39,30 @@ function playFanfare(soundUrl) {
 }
 
 function displayResult(argComputerMove, argPlayerMove) {
-  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
+  let resultMessage = '';
 
   if (argPlayerMove === 'nieznany ruch') {
-    printMessage('Wprowadź poprawny ruch!');
+    resultMessage = 'Wprowadź poprawny ruch!';
   } else if (argComputerMove === argPlayerMove) {
-    printMessage('Remis!');
+    resultMessage = 'Remis!';
+    gameResults.push('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + ' - Remis!');
   } else if (
     (argComputerMove === 'kamień' && argPlayerMove === 'papier') ||
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
-    consecutiveWins++;
-    printMessage('Ty wygrywasz!');
-
-    if (consecutiveWins === 2) {
-      playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
-      consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu
-    }
+    resultMessage = 'Ty wygrywasz!';
+    gameResults.push('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + ' - Ty wygrywasz!');
   } else {
-    consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu, jeśli przegra lub jest remis
-    printMessage('Komputer wygrywa!');
+    resultMessage = 'Komputer wygrywa!';
+    gameResults.push('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + ' - Komputer wygrywa!');
   }
+
+  if (gameResults.length > maxResults) {
+    gameResults.shift();
+  }
+
+  printResults();
 }
 
 function playGame(playerInput) {
@@ -54,9 +70,9 @@ function playGame(playerInput) {
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
 
-  printMessage('Mój ruch to: ' + computerMove);
+  printMessage('Mój ruch to: ' + computerMove, 'messages');
   let playerMove = getMoveName(parseInt(playerInput));
-  printMessage('Twój ruch to: ' + playerMove);
+  printMessage('Twój ruch to: ' + playerMove, 'messages');
 
   displayResult(computerMove, playerMove);
 }
