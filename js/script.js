@@ -2,18 +2,6 @@ function printMessage(msg) {
   let div = document.createElement('div');
   div.innerHTML = msg;
   document.getElementById('messages').appendChild(div);
-  updateGameHistory(msg);
-}
-
-function updateGameHistory(msg) {
-  let gameHistory = document.getElementById('game-results');
-  let historyItem = document.createElement('div');
-  historyItem.innerHTML = msg;
-  gameHistory.appendChild(historyItem);
-
-  if (gameHistory.children.length > 3) {
-    gameHistory.removeChild(gameHistory.children[0]); // Usuń najstarszy wynik, jeśli jest więcej niż 3
-  }
 }
 
 function getMoveName(argMoveId) {
@@ -37,31 +25,28 @@ function playFanfare(soundUrl) {
 }
 
 function displayResult(argComputerMove, argPlayerMove) {
-  let resultMessage = 'Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove;
+  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
 
   if (argPlayerMove === 'nieznany ruch') {
-    resultMessage = 'Wprowadź poprawny ruch!';
+    printMessage('Wprowadź poprawny ruch!');
   } else if (argComputerMove === argPlayerMove) {
-    resultMessage = 'Remis!';
+    printMessage('Remis!');
   } else if (
     (argComputerMove === 'kamień' && argPlayerMove === 'papier') ||
     (argComputerMove === 'papier' && argPlayerMove === 'nożyce') ||
     (argComputerMove === 'nożyce' && argPlayerMove === 'kamień')
   ) {
     consecutiveWins++;
-    resultMessage = 'Ty wygrywasz!';
+    printMessage('Ty wygrywasz!');
 
     if (consecutiveWins === 2) {
       playFanfare('https://drive.google.com/uc?id=1G9Y1plAw_x3hC0ialxYqBtMLBmqo1EEW');
-      consecutiveWins = 0;
+      consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu
     }
   } else {
-    consecutiveWins = 0;
-    resultMessage = 'Komputer wygrywa!';
+    consecutiveWins = 0; // Zresetuj licznik wygranych z rzędu, jeśli przegra lub jest remis
+    printMessage('Komputer wygrywa!');
   }
-
-  printMessage(resultMessage); // Aktualizacja wiadomości
-  updateGameHistory(resultMessage); // Dodanie wyniku do historii
 }
 
 function playGame(playerInput) {
