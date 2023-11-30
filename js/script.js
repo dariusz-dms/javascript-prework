@@ -1,10 +1,15 @@
 {
   const maxResults = 3;
+  const MOVE_ROCK = 1;
+  const MOVE_PAPER = 2;
+  const MOVE_SCISSORS = 3;
+  const UNKNOWN_MOVE = 'nieznany ruch';
+
   let gameResults = [];
   let movesHistory = [];
 
   function printMessage(msg, containerId) {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.innerHTML = msg;
     document.getElementById(containerId).appendChild(div);
   }
@@ -32,14 +37,15 @@
   }
 
   function getMoveName(argMoveId) {
-    if (argMoveId === 1) {
-      return 'kamień';
-    } else if (argMoveId === 2) {
-      return 'papier';
-    } else if (argMoveId === 3) {
-      return 'nożyce';
-    } else {
-      return 'nieznany ruch';
+    switch (argMoveId) {
+      case MOVE_ROCK:
+        return 'kamień';
+      case MOVE_PAPER:
+        return 'papier';
+      case MOVE_SCISSORS:
+        return 'nożyce';
+      default:
+        return UNKNOWN_MOVE;
     }
   }
 
@@ -52,11 +58,11 @@
   }
 
   function displayResult(argComputerMove, argPlayerMove) {
-    const moveMsg = 'Mój ruch to: ' + argComputerMove + ', Twój ruch to: ' + argPlayerMove;
+    const moveMsg = `Mój ruch to: ${argComputerMove}, Twój ruch to: ${argPlayerMove}`;
     movesHistory.push(moveMsg);
     printMovesHistory();
 
-    if (argPlayerMove === 'nieznany ruch') {
+    if (argPlayerMove === UNKNOWN_MOVE) {
       gameResults.push('Wprowadź poprawny ruch!');
     } else if (argComputerMove === argPlayerMove) {
       gameResults.push('Remis!');
@@ -86,12 +92,12 @@
 
   function playGame(playerInput) {
     console.log('Wywołano funkcję playGame. Gracz wybrał: ' + playerInput);
-    let randomNumber = Math.floor(Math.random() * 3 + 1);
-    let computerMove = getMoveName(randomNumber);
+    const randomNumber = Math.floor(Math.random() * 3 + 1);
+    const computerMove = getMoveName(randomNumber);
 
-    printMessage('Mój ruch to: ' + computerMove, 'moves-history');
-    let playerMove = getMoveName(parseInt(playerInput));
-    printMessage('Twój ruch to: ' + playerMove, 'moves-history');
+    printMessage(`Mój ruch to: ${computerMove}`, 'moves-history');
+    const playerMove = getMoveName(parseInt(playerInput));
+    printMessage(`Twój ruch to: ${playerMove}`, 'moves-history');
 
     displayResult(computerMove, playerMove);
 
@@ -100,15 +106,15 @@
   }
 
   document.getElementById('play-rock').addEventListener('click', function () {
-    console.log('Kliknięto guzik Kamień'); 
-    playGame(1);
+    console.log('Kliknięto guzik Kamień');
+    playGame(MOVE_ROCK);
   });
   document.getElementById('play-paper').addEventListener('click', function () {
-    console.log('Kliknięto guzik Papier'); 
-    playGame(2);
+    console.log('Kliknięto guzik Papier');
+    playGame(MOVE_PAPER);
   });
   document.getElementById('play-scissors').addEventListener('click', function () {
     console.log('Kliknięto guzik Nożyce');
-    playGame(3);
+    playGame(MOVE_SCISSORS);
   });
 }
