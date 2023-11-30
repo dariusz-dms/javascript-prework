@@ -1,60 +1,77 @@
 {
   const maxResults = 3;
-  const MOVE_ROCK = 1;
-  const MOVE_PAPER = 2;
-  const MOVE_SCISSORS = 3;
-  const UNKNOWN_MOVE = 'nieznany ruch';
 
   let gameResults = [];
   let movesHistory = [];
 
   function printMessage(msg, containerId) {
-    const div = document.createElement('div');
-    div.innerHTML = msg;
-    document.getElementById(containerId).appendChild(div);
+    function createDiv() {
+      const div = document.createElement('div');
+      div.innerHTML = msg;
+      document.getElementById(containerId).appendChild(div);
+    }
+    createDiv();
   }
 
   function printResults() {
-    const startIndex = Math.max(0, gameResults.length - maxResults);
-    const recentResults = gameResults.slice(startIndex);
-
-    document.getElementById('game-results').innerHTML = '';
-
-    for (const result of recentResults) {
-      printMessage(result, 'game-results');
+    function getRecentResults() {
+      const startIndex = Math.max(0, gameResults.length - maxResults);
+      return gameResults.slice(startIndex);
     }
+
+    const recentResults = getRecentResults();
+
+    function displayGameResults() {
+      document.getElementById('game-results').innerHTML = '';
+      for (const result of recentResults) {
+        printMessage(result, 'game-results');
+      }
+    }
+    displayGameResults();
   }
 
   function printMovesHistory() {
-    const startIndex = Math.max(0, movesHistory.length - maxResults);
-    const recentMoves = movesHistory.slice(startIndex);
-
-    document.getElementById('moves-history').innerHTML = '';
-
-    for (const move of recentMoves) {
-      printMessage(move, 'moves-history');
+    function getRecentMoves() {
+      const startIndex = Math.max(0, movesHistory.length - maxResults);
+      return movesHistory.slice(startIndex);
     }
+
+    const recentMoves = getRecentMoves();
+
+    function displayMovesHistory() {
+      document.getElementById('moves-history').innerHTML = '';
+      for (const move of recentMoves) {
+        printMessage(move, 'moves-history');
+      }
+    }
+    displayMovesHistory();
   }
 
   function getMoveName(argMoveId) {
-    switch (argMoveId) {
-      case MOVE_ROCK:
-        return 'kamień';
-      case MOVE_PAPER:
-        return 'papier';
-      case MOVE_SCISSORS:
-        return 'nożyce';
-      default:
-        return UNKNOWN_MOVE;
+    function getMoveType() {
+      switch (argMoveId) {
+        case 1:
+          return 'kamień';
+        case 2:
+          return 'papier';
+        case 3:
+          return 'nożyce';
+        default:
+          return 'nieznany ruch';
+      }
     }
+    return getMoveType();
   }
 
   let consecutiveWins = 0;
 
   function playFanfare(soundUrl) {
-    const sound = new Audio(soundUrl);
-    sound.volume = 0.5;
-    sound.play();
+    function playSound() {
+      const sound = new Audio(soundUrl);
+      sound.volume = 0.5;
+      sound.play();
+    }
+    playSound();
   }
 
   function displayResult(argComputerMove, argPlayerMove) {
@@ -62,7 +79,7 @@
     movesHistory.push(moveMsg);
     printMovesHistory();
 
-    if (argPlayerMove === UNKNOWN_MOVE) {
+    if (argPlayerMove === 'nieznany ruch') {
       gameResults.push('Wprowadź poprawny ruch!');
     } else if (argComputerMove === argPlayerMove) {
       gameResults.push('Remis!');
@@ -107,14 +124,14 @@
 
   document.getElementById('play-rock').addEventListener('click', function () {
     console.log('Kliknięto guzik Kamień');
-    playGame(MOVE_ROCK);
+    playGame(1);
   });
   document.getElementById('play-paper').addEventListener('click', function () {
     console.log('Kliknięto guzik Papier');
-    playGame(MOVE_PAPER);
+    playGame(2);
   });
   document.getElementById('play-scissors').addEventListener('click', function () {
     console.log('Kliknięto guzik Nożyce');
-    playGame(MOVE_SCISSORS);
+    playGame(3);
   });
 }
