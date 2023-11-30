@@ -1,8 +1,8 @@
 {
   const maxResults = 3;
 
-  let gameResults = [];
-  let movesHistory = [];
+  const gameResults = [];
+  const movesHistory = [];
 
   function printMessage(msg, containerId) {
     function createDiv() {
